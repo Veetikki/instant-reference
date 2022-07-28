@@ -47,7 +47,7 @@ export const downloadFile = (url, path) => {
 };
 
 export const idToPath = async (id) => {
-  const db = new URL("./ids.json", import.meta.url);
+  const db = new URL("~/Dropbox/phd/papers/ids.json", import.meta.url);
   let ids = [];
   try {
     ids = JSON.parse(await fs.readFile(db));
@@ -57,7 +57,7 @@ export const idToPath = async (id) => {
 };
 
 export const pathToId = async (path) => {
-  const db = new URL("./ids.json", import.meta.url);
+  const db = new URL("~/Dropbox/phd/papers/ids.json", import.meta.url);
   let ids = [];
   try {
     ids = JSON.parse(await fs.readFile(db));
