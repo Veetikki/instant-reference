@@ -47,7 +47,7 @@ export const downloadFile = (url, path) => {
 };
 
 export const idToPath = async (id) => {
-  const db = new URL("~/Dropbox/phd/papers/ids.json", import.meta.url);
+  const db = new URL("/home/veeti/Dropbox/phd/papers/ids.json", import.meta.url);
   let ids = [];
   try {
     ids = JSON.parse(await fs.readFile(db));
@@ -57,13 +57,16 @@ export const idToPath = async (id) => {
 };
 
 export const pathToId = async (path) => {
-  const db = new URL("~/Dropbox/phd/papers/ids.json", import.meta.url);
+  const db = new URL("/home/veeti/Dropbox/phd/papers/ids.json", import.meta.url);
   let ids = [];
   try {
     ids = JSON.parse(await fs.readFile(db));
   } catch (e) {}
 
-  const existing = ids.find(([id, p]) => p === path);
+  var filename = path.replace(/^.*[\\\/]/, '');
+  var newPath = "~/Dropbox/phd/papers/" + filename;
+  
+  const existing = ids.find(([id, p]) => p === newPath);
   if (existing) return existing[0];
 
   const unique = (option) => !ids.find(([id, p]) => id === option);
@@ -73,7 +76,7 @@ export const pathToId = async (path) => {
     if (!id) return null;
   }
 
-  ids.push([id, path]);
+  ids.push([id, newPath]);
   await fs.writeFile(db, JSON.stringify(ids, null, 2));
   return id;
 };
